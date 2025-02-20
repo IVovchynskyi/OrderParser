@@ -1,0 +1,42 @@
+[
+    {
+        "CustomerFullName": "John Doe",
+        "OrderItemName": "Laptop",
+        "OrderDate": "2024-11-10T10:00:00",
+        "OrderEndDate": "2024-11-10T15:00:00",
+        "CancellationDate": null,
+        "Cost": 1200.00
+    },
+    {
+        "CustomerFullName": "Jane Smith",
+        "OrderItemName": "Smartphone",
+        "OrderDate": "2024-12-05T09:30:00",
+        "OrderEndDate": "2024-12-20T12:00:00",
+        "CancellationDate": null,
+        "Cost": 800.00
+    },
+    {
+        "CustomerFullName": "John Doe",
+        "OrderItemName": "Mouse",
+        "OrderDate": "2025-01-15T14:00:00",
+        "OrderEndDate": null,
+        "CancellationDate": "2025-01-18T11:00:00",
+        "Cost": 25.00
+    },
+    {
+        "CustomerFullName": "Alice Johnson",
+        "OrderItemName": "Headphones",
+        "OrderDate": "2025-01-10T21:00:00",
+        "OrderEndDate": null,
+        "CancellationDate": null,
+        "Cost": 100.00
+    },
+    {
+        "CustomerFullName": "Jane Smith",
+        "OrderItemName": "Tablet",
+        "OrderDate": "2025-01-20T08:00:00",
+        "OrderEndDate": "2025-03-20T11:00:00",
+        "CancellationDate": null,
+        "Cost": 600.00
+    }
+]
