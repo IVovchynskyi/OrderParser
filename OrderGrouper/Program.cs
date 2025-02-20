@@ -12,10 +12,7 @@ class Program
 
         var grouping = readedOrderList.GroupBy(x => x.CustomerFullName);
 
-
-
-      
-        
+       
         
         foreach (var group in grouping)
         {
