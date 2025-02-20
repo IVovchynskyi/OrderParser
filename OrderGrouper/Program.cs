@@ -71,8 +71,6 @@ class Program
                 }
             }
             
-            // Status calculator 
-
 
             // customer.TotalSpentAmount = group.Sum(x => x.Cost); // not all! only completed 
 
