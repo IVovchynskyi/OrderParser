@@ -1,0 +1,16 @@
+/.vs
+/OrderGrouper/obj
+/OrderGrouper/bin
+/OrderGrouper/.vs
+
+
+/*.pdb
+
+*.suo
+*.user
+
+*.log
+
+_ReSharper.*
+*.tmp
+*.bak
