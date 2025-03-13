@@ -12,22 +12,20 @@ class Program
 
         var grouping = readedOrderList.GroupBy(x => x.CustomerFullName);
 
-
-
-      
-        
+        List<Customer> people = new List<Customer>();
         
         foreach (var group in grouping)
         {
             var customer = new Customer();
+            people.Add(customer);
 
             var splittedName = group.Key.Split(' ');
             customer.FirstName = splittedName.FirstOrDefault() ?? "NoNameGiven";
             customer.LastName = splittedName.Last();
-
-            Console.WriteLine(customer.FirstName + " " + customer.LastName);
-
         }
+        
+        string jsonString = JsonSerializer.Serialize(people, new JsonSerializerOptions { WriteIndented = true });
+        Console.WriteLine(jsonString);
     }
 }
 
