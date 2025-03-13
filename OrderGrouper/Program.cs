@@ -22,6 +22,19 @@ class Program
             var splittedName = group.Key.Split(' ');
             customer.FirstName = splittedName.FirstOrDefault() ?? "NoNameGiven";
             customer.LastName = splittedName.Last();
+            
+            foreach (InputOrder item in group)
+            {
+                Order order = new Order();
+
+                if (string.IsNullOrEmpty(item.OrderDate))
+                {
+                    Console.WriteLine("The order date is EMPTY; Skipping current order parsing");
+                    
+                    break;
+                }
+            }
+
         }
         
         string jsonString = JsonSerializer.Serialize(people, new JsonSerializerOptions { WriteIndented = true });
