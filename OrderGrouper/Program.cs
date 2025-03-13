@@ -26,6 +26,13 @@ class Program
             foreach (InputOrder item in group)
             {
                 Order order = new Order();
+
+                if (string.IsNullOrEmpty(item.OrderDate))
+                {
+                    Console.WriteLine("The order date is EMPTY; Skipping current order parsing");
+                    
+                    break;
+                }
             }
 
         }
