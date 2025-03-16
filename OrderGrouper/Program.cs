@@ -40,6 +40,8 @@ class Program
                     DateTime formattedStartDate = DateTime.Parse(item.OrderDate);
                     order.StartDate = formattedStartDate.ToString("yyyy-MM-dd");
 
+                    order.Name = item.OrderItemName;
+
                     if (string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
                     {
                         order.Status = "In Progress";
