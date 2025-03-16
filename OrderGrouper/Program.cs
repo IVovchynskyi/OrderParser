@@ -33,6 +33,30 @@ class Program
                     
                     break;
                 }
+
+                else
+                {
+                    DateTime formattedStartDate = DateTime.Parse(item.OrderDate);
+                    order.StartDate = formattedStartDate.ToString("yyyy-MM-dd");
+
+                    if (string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
+                    {
+                        order.Status = "In Progress";
+                    } 
+                    else if (string.IsNullOrEmpty(item.OrderEndDate) && !string.IsNullOrEmpty(item.CancellationDate))
+                    {
+                        order.Status = "Canceled";
+                        DateTime formattedCancellationDate = DateTime.Parse(item.CancellationDate);
+                        order.CancellationDate = formattedCancellationDate.ToString("yyyy-MM-dd");
+                    }
+                    else 
+                    {
+                        order.Status = "Completed or Scheuled or Unknown";
+
+                        break;
+                    }
+                          
+                }
             }
 
         }
