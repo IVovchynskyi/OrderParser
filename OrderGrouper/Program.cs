@@ -40,7 +40,9 @@ class Program
                     DateTime formattedStartDate = DateTime.Parse(item.OrderDate);
                     order.StartDate = formattedStartDate.ToString("yyyy-MM-dd");
 
-                    order.Name = item.OrderItemName;
+                    order.Name = item.OrderItemName; // string to string
+                    order.Cost = item.Cost; // string to string
+
 
                     if (string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
                     {
@@ -67,6 +69,9 @@ class Program
                             // CompletionTime calculation 
                             TimeSpan formattedCompletionTime = formattedOrderEndDate - formattedStartDate; // formattedCompletionTime is TimeSpan NOT DateTime
                             order.CompletionTime = $"{formattedCompletionTime.Days} day(s) {formattedCompletionTime.Hours} hour(s) {formattedCompletionTime.Minutes} minute(s)";
+
+                            //Incremenitng Concumet total spent with order cost
+                            customer.TotalSpentAmount += order.Cost;
                         }
                     }
                     
