@@ -11,6 +11,6 @@ namespace OrderGrouper.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal TotalSpentAmount { get; set; } = decimal.Zero;
-        public IEnumerable<Order> Orders { get; set; } = Enumerable.Empty<Order>();
+        public List<Order> Orders { get; set; } = new List<Order>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OrderGrouper.Models;
 using System.Text.Json;
 using System;
+using System.Collections.Concurrent;
 
 class Program
 {
@@ -73,7 +74,8 @@ class Program
 
                         break;
                     }
-                          
+
+                    customer.Orders.Add(order);
                 }
             }
 
