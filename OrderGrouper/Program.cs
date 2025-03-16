@@ -49,9 +49,27 @@ class Program
                         DateTime formattedCancellationDate = DateTime.Parse(item.CancellationDate);
                         order.CancellationDate = formattedCancellationDate.ToString("yyyy-MM-dd");
                     }
-                    else 
+                    else if (!string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
                     {
-                        order.Status = "Completed or Scheuled or Unknown";
+                        DateTime formattedOrderEndDate = DateTime.Parse(item.OrderEndDate);
+                        order.EndDate = formattedOrderEndDate.ToString("yyyy-MM-dd");
+                       
+                        if (formattedOrderEndDate > DateTime.Now) // date in the future
+                        {
+                            order.Status = "Scheuled";
+                        }
+                        else // date in the past
+                        {
+                            order.Status = "Completed";
+                            // CompletionTime calculation 
+                            TimeSpan formattedCompletionTime = formattedOrderEndDate - formattedStartDate; // formattedCompletionTime is TimeSpan NOT DateTime
+                            order.CompletionTime = $"{formattedCompletionTime.Days} day(s) {formattedCompletionTime.Hours} hour(s) {formattedCompletionTime.Minutes} minute(s)";
+                        }
+                    }
+                    
+                    else
+                    {
+                        order.Status = "Unknown";
 
                         break;
                     }
