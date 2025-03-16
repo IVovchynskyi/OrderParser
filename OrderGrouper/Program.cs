@@ -1,6 +1,7 @@
 ﻿using OrderGrouper.Models;
 using System.Text.Json;
 using System;
+using System.Collections.Concurrent;
 
 class Program
 {
@@ -32,6 +33,56 @@ class Program
                     Console.WriteLine("The order date is EMPTY; Skipping current order parsing");
                     
                     break;
+                }
+
+                else
+                {
+                    DateTime formattedStartDate = DateTime.Parse(item.OrderDate);
+                    order.StartDate = formattedStartDate.ToString("yyyy-MM-dd");
+
+                    order.Name = item.OrderItemName; // string to string
+                    order.Cost = item.Cost; // string to string
+
+
+                    if (string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
+                    {
+                        order.Status = "In Progress";
+                    } 
+                    else if (string.IsNullOrEmpty(item.OrderEndDate) && !string.IsNullOrEmpty(item.CancellationDate))
+                    {
+                        order.Status = "Canceled";
+                        DateTime formattedCancellationDate = DateTime.Parse(item.CancellationDate);
+                        order.CancellationDate = formattedCancellationDate.ToString("yyyy-MM-dd");
+                    }
+                    else if (!string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
+                    {
+                        DateTime formattedOrderEndDate = DateTime.Parse(item.OrderEndDate);
+                        order.EndDate = formattedOrderEndDate.ToString("yyyy-MM-dd");
+                       
+                        if (formattedOrderEndDate > DateTime.Now) // date in the future
+                        {
+                            order.Status = "Scheuled";
+                        }
+                        else // date in the past
+                        {
+                            order.Status = "Completed";
+                            // CompletionTime calculation 
+                            TimeSpan formattedCompletionTime = formattedOrderEndDate - formattedStartDate; // formattedCompletionTime is TimeSpan NOT DateTime
+                            order.CompletionTime = $"{formattedCompletionTime.Days} day(s) {formattedCompletionTime.Hours} hour(s) {formattedCompletionTime.Minutes} minute(s)";
+
+                            //Incremenitng Concumet total spent with order cost
+                            customer.TotalSpentAmount += order.Cost;
+                        }
+                    }
+                    
+                    else
+                    {
+                        order.Status = "Unknown";
+
+                        break;
+                    }
+
+                    customer.Orders.Add(order);
                 }
             }
 
