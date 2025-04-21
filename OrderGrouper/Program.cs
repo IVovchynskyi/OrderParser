@@ -2,6 +2,9 @@
 using System.Text.Json;
 using System;
 using System.Collections.Concurrent;
+using OrderGrouper.Extensions;
+using System.Drawing;
+using System.Text.Json.Serialization;
 
 class Program
 {
@@ -38,7 +41,7 @@ class Program
                 else
                 {
                     DateTime formattedStartDate = DateTime.Parse(item.OrderDate);
-                    order.StartDate = formattedStartDate.ToString("yyyy-MM-dd");
+                    order.StartDate = formattedStartDate.ToOrderDate();
 
                     order.Name = item.OrderItemName; // string to string
                     order.Cost = item.Cost; // string to string
@@ -46,38 +49,42 @@ class Program
 
                     if (string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
                     {
-                        order.Status = "In Progress";
+                        order.Status = OrderStatus.InProgress;
                     } 
                     else if (string.IsNullOrEmpty(item.OrderEndDate) && !string.IsNullOrEmpty(item.CancellationDate))
                     {
-                        order.Status = "Canceled";
+                        order.Status = OrderStatus.Cancelled;
                         DateTime formattedCancellationDate = DateTime.Parse(item.CancellationDate);
-                        order.CancellationDate = formattedCancellationDate.ToString("yyyy-MM-dd");
+                        order.CancellationDate = formattedCancellationDate.ToOrderDate();
                     }
                     else if (!string.IsNullOrEmpty(item.OrderEndDate) && string.IsNullOrEmpty(item.CancellationDate))
                     {
                         DateTime formattedOrderEndDate = DateTime.Parse(item.OrderEndDate);
-                        order.EndDate = formattedOrderEndDate.ToString("yyyy-MM-dd");
+                        order.EndDate = formattedOrderEndDate.ToOrderDate();
                        
                         if (formattedOrderEndDate > DateTime.Now) // date in the future
                         {
-                            order.Status = "Scheuled";
+                            order.Status = OrderStatus.Scheduled;
                         }
                         else // date in the past
                         {
-                            order.Status = "Completed";
+                            order.Status = OrderStatus.Completed;
+
+                            object val = Convert.ChangeType(order.Status, order.Status.GetTypeCode());
+                            Console.WriteLine(val);
+
                             // CompletionTime calculation 
                             TimeSpan formattedCompletionTime = formattedOrderEndDate - formattedStartDate; // formattedCompletionTime is TimeSpan NOT DateTime
                             order.CompletionTime = $"{formattedCompletionTime.Days} day(s) {formattedCompletionTime.Hours} hour(s) {formattedCompletionTime.Minutes} minute(s)";
 
-                            //Incremenitng Concumet total spent with order cost
+                            //Incremenitng Consumer total spent with order cost
                             customer.TotalSpentAmount += order.Cost;
                         }
                     }
                     
                     else
                     {
-                        order.Status = "Unknown";
+                        order.Status = OrderStatus.Unknown;
 
                         break;
                     }
@@ -85,9 +92,7 @@ class Program
                     customer.Orders.Add(order);
                 }
             }
-
         }
-        
         string jsonString = JsonSerializer.Serialize(people, new JsonSerializerOptions { WriteIndented = true });
         Console.WriteLine(jsonString);
     }

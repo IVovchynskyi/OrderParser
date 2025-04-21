@@ -10,7 +10,7 @@ namespace OrderGrouper.Models
     {
         public string Name { get; set; }
         public decimal Cost { get; set; }
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public string CompletionTime { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
