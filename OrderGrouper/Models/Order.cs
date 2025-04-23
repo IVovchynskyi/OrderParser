@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrderGrouper.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,10 @@ namespace OrderGrouper.Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string CancellationDate { get; set; }
+        public string StatusDescription { get
+            {
+                return Status.GetDescription();
+            }
+        }
     }
 }
