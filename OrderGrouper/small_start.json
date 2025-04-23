@@ -1,0 +1,8 @@
+{
+    "CustomerFullName": "John Doe",
+    "OrderItemName": "Laptop",
+    "OrderDate": "2024-11-10T10:00:00",
+    "OrderEndDate": "2024-11-10T15:00:00",
+    "CancellationDate": null,
+    "Cost": 1200.00
+}
